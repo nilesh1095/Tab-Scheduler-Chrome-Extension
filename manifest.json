@@ -1,0 +1,13 @@
+{
+    "name": "Tab Scheduler",
+    "version": "1.0",
+    "description": "This extension will open a given URL for a given scheduled Time.",
+    "manifest_version": 2,
+    "browser_action": {
+        "default_popup": "index.html"
+    },
+    "background": {
+        "scripts": ["app.js"],
+        "persistent": true
+      }
+  }

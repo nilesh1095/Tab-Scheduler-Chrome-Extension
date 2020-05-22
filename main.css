@@ -1,0 +1,9 @@
+.scheduler-container{
+    display: flex;
+}
+.inner-container{
+    display: flex;
+}
+.pick-time , .url , .pick-day{
+    padding: 8px;
+}

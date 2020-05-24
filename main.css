@@ -1,9 +1,32 @@
-.scheduler-container{
+.container{
+    max-width: 500px;
+    margin: auto;
+    padding: 16px;
+    border: 1px solid black;
+}
+
+.add-tab{
+    padding:8px;
+    border: 1px dotted black;
+    cursor: pointer;
+}
+.category-inner-wrapper{
     display: flex;
 }
-.inner-container{
-    display: flex;
-}
-.pick-time , .url , .pick-day{
+.category-wrapper{
     padding: 8px;
+    border: 1px solid black;
+    margin-bottom: 8px;
+}
+.button{
+    margin-top: 8px;
+}
+.time-url{
+    margin-top: 8px;
+}
+.custom-selector{   
+    margin-left: 16px;
+}
+#startTime{
+    margin-right: 16px;
 }

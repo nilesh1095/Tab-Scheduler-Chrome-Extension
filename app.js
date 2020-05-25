@@ -1,43 +1,42 @@
 const addBtn = document.querySelector('.add-tab');
-const category = document.querySelector('.category');
+const scheduleButton = document.getElementById('submitBtn');
 let id = 0;
 
 const addSchedulerHandler = () =>{
+    console.log("scheduler added")
     id++
     const newCategory = document.createElement('div');
     newCategory.innerHTML = `
-    <div id="category-${id}">
+    <div id="category-${id}" class="category">
         <div class="category-wrapper">
             <div class="category-inner-wrapper">
                 <div>
                     Schedule :
                 </div>
                 <div>
-                    <select class="category-selector">
-                        <option value="weekdays" selected>Monday to Friday Scheduler</option>
-                        <option value="weekend">Weekend Scheduler</option>
-                        <option value="custom">Customize Scheduler</option>
+                    <select class="category-selector" id="dropdown-${id}">
+                        <option value="weekdays" selected>Weekdays</option>
+                        <option value="weekend">Weekends</option>
+                        <option value="custom">Customize</option>
                     </select>
                 </div>
             </div>
             <div class="time-url">
                 <span>
                     <label for="startTime">Start time: </label>
-                    <input type="time" id="startTime" />
+                    <input type="time" id="startTime-${id}" />
                 </span>
                 <span>
-                    <label for="url">URL: </label>
-                    <input type="url" id="inputUrl"/>
+                    <label for="url">URL : </label>
+                    <input type="url" id="inputUrl-${id}"/>
                 </span>
-                <div class="button">
-                    <button id="submitBtn">Submit</button>
-                </div>
             </div>
         </div>
     </div>`
     document.querySelector('.container').insertAdjacentElement('afterbegin', newCategory);
     const categorySelector = document.querySelector('.category-selector');
     categorySelector.addEventListener('click',categoryHandler);
+    scheduleButton.style.display='block';
 }
 
 const categoryHandler = (e) =>{
@@ -46,8 +45,8 @@ const categoryHandler = (e) =>{
     const newCategorySelector = document.createElement('div');
     newCategorySelector.className="custom-selector";
     newCategorySelector.innerHTML = `
-        <span>select a day:</span>
-        <select>
+        <span>Select a Day:</span>
+        <select class="pick-day">
             <option value="monday">Monday</option>
             <option value="tuesday">Tuesday</option>
             <option value="wednesday">Wednesday</option>
@@ -64,6 +63,47 @@ const categoryHandler = (e) =>{
     }
 }
 
-addBtn.addEventListener('click',addSchedulerHandler);
+const onScheduleButtonClickHandler = () =>{
+    const category = document.querySelectorAll('.category');
+    const schedulerArray =[];
+    category.forEach((e,i)=>{
+        let time = e.querySelector('input[type="time"]').value;
+        let url = e.querySelector('input[type="url"]').value;
+        let schedulerDropDown = e.querySelector('.category-selector').value;
+        let customSelector  = document.querySelector('.custom-selector');
+        let schedulerObject = {
+            time,url,schedulerDropDown,customSelector
+        }
+        schedulerArray.push(schedulerObject)
+    });
+    
+    scheduleTab(schedulerArray);
+}
+
+const scheduleTab = (arr) =>{
+    arr.forEach(e=>{
+        let hour = e.time.split(':')[0];
+        let minutes = e.time.split(':')[1];;
+        let currentDate = new Date();
+        let eneteredTime = new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate(),hour,minutes,0,0);
+        if(eneteredTime.getTime() < currentDate.getTime()){
+            eneteredTime = new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate()+1,hour,minutes,0,0);
+        }
+        let setTime = eneteredTime - currentDate;
+        setTimeOut(setTime,e.url);
+    });
+};
+
+const setTimeOut = (setTime,url) =>{
+    console.log(setTime);
+    setTimeout(()=>{
+        window.open(url,'_blank');
+    },setTime);
+}
+
+if(addBtn && scheduleButton){
+    addBtn.addEventListener('click',addSchedulerHandler);
+    scheduleButton.addEventListener('click',onScheduleButtonClickHandler);
+}
 
 

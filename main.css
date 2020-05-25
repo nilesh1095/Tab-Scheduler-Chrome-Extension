@@ -1,5 +1,8 @@
+html{
+    width: 425px;
+}
 .container{
-    max-width: 500px;
+    max-width: 100%;
     margin: auto;
     padding: 16px;
     border: 1px solid black;
@@ -29,4 +32,13 @@
 }
 #startTime{
     margin-right: 16px;
+}
+#submitBtn{
+    width: 100%;
+    padding: 8px;
+    display: none;
+    cursor: pointer;
+}
+input[type="url"]{
+    width: 185px;
 }
